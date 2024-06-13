@@ -1,4 +1,5 @@
 # Node.js
+
 # Build a general Node.js project with npm.
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
@@ -19,3 +20,14 @@ steps:
     npm install
     npm run build
   displayName: 'npm install and build'
+
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: 'Azure subscription 1(7885d7ba-c47d-4eb7-a5f7-9fdd6158f238)'
+    appType: 'webApp'
+    appName: 'az-pipeline-deployment'
+    deployToSlotOrASE: true
+    resourceGroupName: 'az-database'
+    slotName: 'production'
+    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    deploymentMethod: 'auto'
