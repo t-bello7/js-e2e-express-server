@@ -67,5 +67,5 @@ stages:
               resourceGroupName: 'az-database'
  #             slotName: 'production'
               package: $(Pipeline.Workspace)/Production/$(Build.BuildId).zip
-  #            deploymentMethod: 'auto'
+              deploymentMethod: 'auto'
               startUpCommand: 'npm run start'
