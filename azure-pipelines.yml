@@ -5,7 +5,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 trigger:
-- main
+- zip-deployment
 
 variables:
   azureSubscription: 'Azure subscription 1(7885d7ba-c47d-4eb7-a5f7-9fdd6158f238)'
