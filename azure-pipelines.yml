@@ -28,6 +28,7 @@ stages:
 
     - script: |
         npm install
+        npm run build --if-present
       displayName: 'npm install'
     - task: ArchiveFiles@2
       displayName: 'Archive Files'
@@ -61,9 +62,9 @@ stages:
               azureSubscription: $(azureSubscription)
               appType: 'webApp'
               appName: $(appName)
-              # deployToSlotOrASE: true
+              deployToSlotOrASE: true
               resourceGroupName: 'az-database'
- #             slotName: 'production'
+             slotName: 'production'
               package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
               deploymentMethod: 'auto'
               startUpCommand: 'npm run start'
