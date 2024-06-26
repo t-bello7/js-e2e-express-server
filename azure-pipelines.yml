@@ -5,7 +5,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 trigger:
-- main
+- folder-deployment
 
 variables:
   azureSubscription: 'Azure subscription 1(7885d7ba-c47d-4eb7-a5f7-9fdd6158f238)'
@@ -38,11 +38,8 @@ stages:
         archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
         replaceExistingArchive: true
         
-    - task: PublishPipelineArtifact@1
-      displayName: Export
-      inputs:
-        artifact: Production
-        targetPath: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+      artifact: drop
 
 - stage: Deploy
   displayName: Deploy stage
@@ -59,11 +56,12 @@ stages:
         deploy:
           steps:
           - task: AzureWebApp@1
+            displayName: 'Azure Web App Deploy $(appName)'
             inputs:
               azureSubscription: $(azureSubscription)
               appType: 'webApp'
               appName: $(appName)
-              deployToSlotOrASE: true
+              # deployToSlotOrASE: true
               resourceGroupName: 'az-database'
  #             slotName: 'production'
               package: $(Pipeline.Workspace)/Production/$(Build.BuildId).zip
